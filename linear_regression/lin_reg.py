@@ -4,10 +4,15 @@ import numpy as np
 class LinearRegression:
 
     def __init__(self, data_X, data_y,
-                 lambda_reg=0):  # regularization parameter lambda is optional (someone may not want to regularize linear regression)
+                 lambda_reg=0,
+                 # regularization parameter lambda is optional (someone may not want to regularize linear regression or use normalization)
+                 normalize=False):  # normalization is optional ( but necessary in big data sets - prevents overflow and speeds up computation )
         self.m = data_X.shape[0]  # number of training examples
-        self.X = np.append(np.ones((self.m, 1)), data_X, 1)  # training data
         self.y = data_y  # training answers to the given data
+        if not normalize:
+            self.X = np.append(np.ones((self.m, 1)), data_X, 1)  # training data not normalized
+        else:
+            self.X = np.append(np.ones((self.m, 1)), self.normalize_features(data_X)[0], 1)  # training data normalized
         self.lambda_reg = lambda_reg  # regularization parameter lambda
         self.theta = np.zeros((self.X.shape[1], 1))  # initial parameters - all zeros
         self.cost = self.__compute_cost()  # initial cost based on initial theta
@@ -28,6 +33,13 @@ class LinearRegression:
         costs = []
         for i in range(1, iters + 1):
             self.theta = self.theta * (1 - alpha * self.lambda_reg / self.m) - (alpha / self.m) * (
-                        np.transpose(self.X) @ (self.X @ self.theta - self.y))
+                    np.transpose(self.X) @ (self.X @ self.theta - self.y))
             costs.append(self.__compute_cost())
+        self.cost=costs[-1]
         return costs
+
+    def normalize_features(self, X):
+        mean = np.mean(X, axis=0)
+        std_var = np.std(X, axis=0)
+        X_normalized = (X - mean) / std_var
+        return X_normalized, mean, std_var
