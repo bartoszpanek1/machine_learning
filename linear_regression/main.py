@@ -56,7 +56,10 @@ plt.ylabel('Profit in $10000s')
 plt.title('Optimal line')
 plt.show()
 
-
+# example prediction
+# Population of 35000
+print('Predicted profit for a city with population of 35000: $' + str(round(lr.predict(np.array([[3.5]])) * 10000, 2)))
+print('Predicted profit for a city with population of 70000: $' + str(round(lr.predict(np.array([[7.0]])) * 10000, 2)))
 
 # ----MULTIVARIATE DATA-----
 input('PRESS ENTER TO CONTINUE \n')
@@ -88,8 +91,9 @@ plt.ylabel('Cost')
 plt.title('Cost minimization - multivariate')
 plt.show()  # how gradient minimized the cost
 
-
 print('Minimized cost: ' + str(lr_multi.cost))
 print('Optimal parameters: ')
 print(lr_multi.theta)
 
+print('Predicted price of 1650 sq-ft, 3br house: $' + str(round(lr_multi.predict(np.array([[1650, 3]])), 2)))
+print('Predicted price of 2000 sq-ft, 4br house: $' + str(round(lr_multi.predict(np.array([[2000, 4]])), 2)))
