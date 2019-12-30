@@ -186,5 +186,3 @@ plt.ylabel('Y')
 plt.title('Optimal line')
 plt.show()
 
-print(data[0].shape)
-print(predicted_values.shape)
