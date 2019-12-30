@@ -4,15 +4,19 @@ import numpy as np
 class LinearRegression:
 
     def __init__(self, data_X, data_y,
+                 # regularization parameter lambda is optional (someone may not want to regularize linear regression if data is simple)
                  lambda_reg=0,
-                 # regularization parameter lambda is optional (someone may not want to regularize linear regression or use normalization)
-                 normalize=False):  # normalization is optional ( but necessary in big data sets - prevents overflow and speeds up computation )
+                 # normalization is optional ( but necessary in big data sets - prevents overflow and speeds up computation )
+                 normalize=False):
         self.m = data_X.shape[0]  # number of training examples
         self.y = data_y  # training answers to the given data
+        self.normalized = normalize
+        self.X_mean = None
+        self.X_std_var = None
         if not normalize:
             self.X = np.append(np.ones((self.m, 1)), data_X, 1)  # training data not normalized
         else:
-            self.X = np.append(np.ones((self.m, 1)), self.normalize_features(data_X)[0], 1)  # training data normalized
+            self.X = np.append(np.ones((self.m, 1)), self.normalize_features(data_X), 1)  # training data normalized
         self.lambda_reg = lambda_reg  # regularization parameter lambda
         self.theta = np.zeros((self.X.shape[1], 1))  # initial parameters - all zeros
         self.cost = self.__compute_cost()  # initial cost based on initial theta
@@ -35,11 +39,20 @@ class LinearRegression:
             self.theta = self.theta * (1 - alpha * self.lambda_reg / self.m) - (alpha / self.m) * (
                     np.transpose(self.X) @ (self.X @ self.theta - self.y))
             costs.append(self.__compute_cost())
-        self.cost=costs[-1]
+        self.cost = costs[-1]
         return costs
 
     def normalize_features(self, X):
         mean = np.mean(X, axis=0)
         std_var = np.std(X, axis=0)
         X_normalized = (X - mean) / std_var
-        return X_normalized, mean, std_var
+        self.X_mean = mean
+        self.X_std_var = std_var
+        return X_normalized
+
+    def predict(self, data):
+        def normalize(d):
+            return (d - self.X_mean) / self.X_std_var
+
+        return ((np.append(np.ones((1, 1)), normalize(data), 1)) @ self.theta)[0][
+            0] if self.normalized else ((np.append(np.ones((1, 1)), data, 1)) @ self.theta)[0][0]
