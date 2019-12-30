@@ -2,7 +2,6 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from linear_regression.lin_reg import LinearRegression
-from mpl_toolkits.mplot3d import Axes3D  # This import registers the 3D projection, but is otherwise unused.
 
 # first we will execute an univariate linear regression
 
@@ -29,6 +28,7 @@ plt.ylabel('Profit in $10000s')
 plt.title('Training data')
 plt.show()
 
+input('PRESS ENTER TO APPLY LINEAR REGRESSION \n')
 X = data[0].copy(deep=True).to_numpy().reshape((data[0].shape[0], 1))
 y = data[1].copy(deep=True).to_numpy().reshape((data[1].shape[0], 1))
 
@@ -55,10 +55,15 @@ plt.xlabel('Population of a City in 10000s')
 plt.ylabel('Profit in $10000s')
 plt.title('Optimal line')
 plt.show()
+
+
+
+# ----MULTIVARIATE DATA-----
+input('PRESS ENTER TO CONTINUE \n')
 print('----------------------')
 print('-----MULTIVARIATE-----')
 print('----------------------')
-# ----MULTIVARIATE DATA-----
+
 data_multi = pd.read_csv('data2.txt', header=None)
 data_multi.columns = ['Size', 'No. of bedrooms', 'Price of the house']
 print('First 5 examples from data2.txt')
@@ -69,15 +74,7 @@ data_multi.columns = [0,
                       2]  # changing columns' headers because plt.scatter doesnt see values propely if column's name is a string
 
 # visualizing the data
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
-ax.scatter(data_multi[0], data_multi[1], data_multi[2])
-ax.set_xlabel('Size (square feet)')
-ax.set_ylabel('No. of bedrooms')
-ax.set_zlabel('Price of the house ( $ )')
-plt.title('Training data')
-plt.show()
-
+input('PRESS ENTER TO APPLY LINEAR REGRESSION \n')
 X_multi = data_multi.iloc[:, 0:2].to_numpy(copy=True)
 y_multi = data_multi.iloc[:, 2].to_numpy(copy=True).reshape((data_multi[1].shape[0], 1))
 
@@ -90,6 +87,8 @@ plt.xlabel('Number of iterations')
 plt.ylabel('Cost')
 plt.title('Cost minimization - multivariate')
 plt.show()  # how gradient minimized the cost
+
+
 print('Minimized cost: ' + str(lr_multi.cost))
 print('Optimal parameters: ')
 print(lr_multi.theta)
