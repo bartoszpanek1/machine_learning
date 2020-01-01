@@ -3,12 +3,13 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from linear_regression.lin_reg import LinearRegression
 from linear_regression.lin_reg import simple_generate_data
-# first we will execute an univariate linear regression
 
-# data1.txt is a data taken from Andrew Ng's Machine Learning course - Linear Regression
-# in data1.txt, first column is the population of a city (in 10000s) and the second column is a profit of a food truck (int $10000s)
+# data1.txt and data2.txt are taken from Andrew Ng's Machine Learning course - Linear Regression
+# I took data from Andrew Ng's course because correct answers are well known thus it's easy to test the code
+# I also generated some data by myself to test if it works for more complex training data
 
 # -----UNIVARIATE DATA-----
+# in data1.txt, first column is the population of a city (in 10000s) and the second column is a profit of a food truck (int $10000s)
 # showing the data
 print('----------------------')
 print('------UNIVARIATE------')
