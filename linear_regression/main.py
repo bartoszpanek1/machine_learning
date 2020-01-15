@@ -172,7 +172,7 @@ costs = lr.compute_optimal_theta(iters, alpha)
 plt.plot([i for i in range(1, iters + 1)], costs)
 plt.xlabel('Number of iterations')
 plt.ylabel('Cost')
-plt.title('Cost minimization - univariate')
+plt.title('Cost minimization - polynomial')
 plt.show()  # how gradient minimized the cost
 
 print('Minimized cost: ' + str(lr.cost))

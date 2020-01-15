@@ -36,10 +36,9 @@ class LinearRegression:
     def compute_optimal_theta(self, iters, alpha):
         costs = []
         for i in range(1, iters + 1):
-            self.theta = self.theta * (1 - alpha * self.lambda_reg / self.m) - (alpha / self.m) * (
-                    np.transpose(self.X) @ (self.X @ self.theta - self.y))
-            if (self.lambda_reg > 0):
-                self.theta[1:] = self.theta[1:] + (alpha * self.lambda_reg / self.m) * self.theta[1:]
+            if self.lambda_reg==0:
+                self.theta = self.theta - (alpha / self.m) * (
+                        np.transpose(self.X) @ (self.X @ self.theta - self.y))
             costs.append(self.__compute_cost())
         self.cost = costs[-1]
         return costs
@@ -59,6 +58,7 @@ class LinearRegression:
         return ((np.append(np.ones((1, 1)), normalize(data), 1)) @ self.theta)[0][
             0] if self.normalized else ((np.append(np.ones((1, 1)), data, 1)) @ self.theta)[0][0]
 
+
 #added simple function to generate data and write it to the file It is not ideal, need to scale parameters properly to generate good data
 def simple_generate_data(pol_degree, y_parameters, no_of_examples):
     np.random.seed(0)
@@ -69,3 +69,6 @@ def simple_generate_data(pol_degree, y_parameters, no_of_examples):
     x = x[:, np.newaxis]
     y = y[:, np.newaxis]
     np.savetxt('generated_data.txt',np.append(x,y,axis=1),delimiter=',')
+
+
+
