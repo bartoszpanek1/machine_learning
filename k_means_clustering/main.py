@@ -5,13 +5,12 @@ from k_means_clustering.k_means import  KMeans
 data = loadmat("ex7data2.mat")
 X= data["X"]
 
-k_means = KMeans(X,3)
-initial_centroids = np.array([[3,3],[6,2],[8,5]])
-idx = k_means.closest_centroids(initial_centroids)
-print(idx[0:3])
+k_means = KMeans(X,3,visualize=True)
+centroids_positions = k_means.run_k_means(5)
+print(centroids_positions)
 
-centroids = k_means.compute_centroids(idx)
-print(centroids)
+
+
 
 
 
