@@ -3,7 +3,7 @@ Implementations of machine learning algorithms from scratch.
 
 ## Installation
 
-I'm using the package manager [pip] (https://pip.pypa.io/en/stable/installing/) to install Numpy, Pandas, Matplotlib and Scipy.
+I'm using the package manager [pip](https://pip.pypa.io/en/stable/installing/) to install Numpy, Pandas, Matplotlib and Scipy.
 
 ```bash
 pip install numpy
